@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lz.bitcoinexplorer1109.dao.TransactionRecordMapper">
+  <resultMap id="BaseResultMap" type="com.lz.bitcoinexplorer1109.po.TransactionRecord">
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="Address" jdbcType="VARCHAR" property="address" />
+    <result column="Amcount" jdbcType="DOUBLE" property="amcount" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="txid" jdbcType="INTEGER" property="txid" />
+  </resultMap>
+
+
+  <insert id="insert" parameterType="com.lz.bitcoinexplorer1109.po.TransactionRecord">
+    insert into transactionrecord (index, Address, Amcount, 
+      type, txid)
+    values (#{index,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{amcount,jdbcType=DOUBLE}, 
+      #{type,jdbcType=BIT}, #{txid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lz.bitcoinexplorer1109.po.TransactionRecord">
+    insert into transactionrecord
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="index != null">
+        index,
+      </if>
+      <if test="address != null">
+        Address,
+      </if>
+      <if test="amcount != null">
+        Amcount,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="txid != null">
+        txid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="amcount != null">
+        #{amcount,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="txid != null">
+        #{txid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

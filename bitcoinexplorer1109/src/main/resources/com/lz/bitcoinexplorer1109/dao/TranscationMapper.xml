@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lz.bitcoinexplorer1109.dao.TranscationMapper">
+  <resultMap id="BaseResultMap" type="com.lz.bitcoinexplorer1109.po.Transcation">
+    <result column="transcation_id" jdbcType="INTEGER" property="transcationId" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="total input" jdbcType="DOUBLE" property="totalInput" />
+    <result column="total output" jdbcType="DOUBLE" property="totalOutput" />
+    <result column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="fees" jdbcType="DOUBLE" property="fees" />
+    <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+  </resultMap>
+  <insert id="insert" parameterType="com.lz.bitcoinexplorer1109.po.Transcation">
+    insert into transcation (transcation_id, hash, time, 
+      "total input", "total output", block_id, 
+      fees, confirmations)
+    values (#{transcationId,jdbcType=INTEGER}, #{hash,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, 
+      #{totalInput,jdbcType=DOUBLE}, #{totalOutput,jdbcType=DOUBLE}, #{blockId,jdbcType=INTEGER}, 
+      #{fees,jdbcType=DOUBLE}, #{confirmations,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lz.bitcoinexplorer1109.po.Transcation">
+    insert into transcation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transcationId != null">
+        transcation_id,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="totalInput != null">
+        "total input",
+      </if>
+      <if test="totalOutput != null">
+        "total output",
+      </if>
+      <if test="blockId != null">
+        block_id,
+      </if>
+      <if test="fees != null">
+        fees,
+      </if>
+      <if test="confirmations != null">
+        confirmations,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transcationId != null">
+        #{transcationId,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="totalInput != null">
+        #{totalInput,jdbcType=DOUBLE},
+      </if>
+      <if test="totalOutput != null">
+        #{totalOutput,jdbcType=DOUBLE},
+      </if>
+      <if test="blockId != null">
+        #{blockId,jdbcType=INTEGER},
+      </if>
+      <if test="fees != null">
+        #{fees,jdbcType=DOUBLE},
+      </if>
+      <if test="confirmations != null">
+        #{confirmations,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+
+</mapper>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lz.bitcoinexplorer1109.dao.BlockMapper">
+  <resultMap id="BaseResultMap" type="com.lz.bitcoinexplorer1109.po.Block">
+    <result column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="difficulty" jdbcType="DOUBLE" property="difficulty" />
+    <result column="Transactions" jdbcType="INTEGER" property="transactions" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="Timestamp" jdbcType="TIMESTAMP" property="timestamp" />
+    <result column="transaction volume" jdbcType="DOUBLE" property="transactionVolume" />
+    <result column="mined" jdbcType="VARCHAR" property="mined" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="block Reward" jdbcType="DOUBLE" property="blockReward" />
+    <result column="fee Reward" jdbcType="DOUBLE" property="feeReward" />
+  </resultMap>
+
+
+  <resultMap id="BlockMap" type="com.lz.bitcoinexplorer1109.dto.BlockDto">
+    <result column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="difficulty" jdbcType="DOUBLE" property="difficulty" />
+    <result column="Transactions" jdbcType="INTEGER" property="transactions" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="version" jdbcType="INTEGER" property="version" />
+    <result column="Timestamp" jdbcType="TIMESTAMP" property="timestamp" />
+    <result column="transaction volume" jdbcType="DOUBLE" property="transactionVolume" />
+    <result column="mined" jdbcType="VARCHAR" property="mined" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="block Reward" jdbcType="DOUBLE" property="blockReward" />
+    <result column="fee Reward" jdbcType="DOUBLE" property="feeReward" />
+    <collection property="transactionDtos" ofType="com.lz.bitcoinexplorer1109.dto.TransactionDto">
+      <result column="transcation_id" jdbcType="INTEGER" property="transcationId" />
+      <result column="hash" jdbcType="VARCHAR" property="hash" />
+      <result column="time" jdbcType="DATE" property="time" />
+      <result column="total input" jdbcType="DOUBLE" property="totalInput" />
+      <result column="total output" jdbcType="DOUBLE" property="totalOutput" />
+      <result column="block_id" jdbcType="INTEGER" property="blockId" />
+      <result column="fees" jdbcType="DOUBLE" property="fees" />
+      <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+      <collection property="transactionRecords" ofType="com.lz.bitcoinexplorer1109.dto.TranscationRecordDto">
+        <result column="index" jdbcType="INTEGER" property="index" />
+        <result column="Address" jdbcType="VARCHAR" property="address" />
+        <result column="Amcount" jdbcType="DOUBLE" property="amcount" />
+        <result column="type" jdbcType="BIT" property="type" />
+        <result column="txid" jdbcType="INTEGER" property="txid" />
+      </collection>
+    </collection>
+  </resultMap>
+
+
+  <insert id="insert" parameterType="com.lz.bitcoinexplorer1109.po.Block">
+    insert into block (block_id, hash, difficulty, 
+      Transactions, height, version, 
+      Timestamp, "transaction volume", mined, 
+      size, weight, "block Reward", 
+      "fee Reward")
+    values (#{blockId,jdbcType=INTEGER}, #{hash,jdbcType=VARCHAR}, #{difficulty,jdbcType=DOUBLE}, 
+      #{transactions,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, 
+      #{timestamp,jdbcType=TIMESTAMP}, #{transactionVolume,jdbcType=DOUBLE}, #{mined,jdbcType=VARCHAR}, 
+      #{size,jdbcType=INTEGER}, #{weight,jdbcType=INTEGER}, #{blockReward,jdbcType=DOUBLE}, 
+      #{feeReward,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lz.bitcoinexplorer1109.po.Block">
+    insert into block
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blockId != null">
+        block_id,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="transactions != null">
+        Transactions,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="timestamp != null">
+        Timestamp,
+      </if>
+      <if test="transactionVolume != null">
+        "transaction volume",
+      </if>
+      <if test="mined != null">
+        mined,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="blockReward != null">
+        "block Reward",
+      </if>
+      <if test="feeReward != null">
+        "fee Reward",
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blockId != null">
+        #{blockId,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="transactions != null">
+        #{transactions,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="timestamp != null">
+        #{timestamp,jdbcType=TIMESTAMP},
+      </if>
+      <if test="transactionVolume != null">
+        #{transactionVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="mined != null">
+        #{mined,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="blockReward != null">
+        #{blockReward,jdbcType=DOUBLE},
+      </if>
+      <if test="feeReward != null">
+        #{feeReward,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="blocks" resultType="com.lz.bitcoinexplorer1109.po.Block">
+    select * from block
+  </select>
+
+  <select id="getBlockByHash" resultMap="BlockMap">
+    SELECT * from block b LEFT JOIN transcation t on b.block_id=t.block_id LEFT JOIN transactionrecord
+      tr on tr.txid=t.transcation_id WHERE b.`hash`=#{hash}
+  </select>
+</mapper>

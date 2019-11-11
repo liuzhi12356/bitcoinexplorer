@@ -8,7 +8,13 @@
     <result column="type" jdbcType="BIT" property="type" />
     <result column="txid" jdbcType="INTEGER" property="txid" />
   </resultMap>
-
+  <resultMap id="TranscationRecordDtoMap" type="com.lz.bitcoinexplorer1109.dto.TranscationRecordDto">
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="Address" jdbcType="VARCHAR" property="address" />
+    <result column="Amcount" jdbcType="DOUBLE" property="amcount" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="txid" jdbcType="INTEGER" property="txid" />
+  </resultMap>
 
   <insert id="insert" parameterType="com.lz.bitcoinexplorer1109.po.TransactionRecord">
     insert into transactionrecord (index, Address, Amcount, 
@@ -53,4 +59,12 @@
       </if>
     </trim>
   </insert>
+
+  <select id="selectTranscationByKey" resultMap="TranscationRecordDtoMap">
+    select * from transactionrecord tr where tr.txid=#{value}
+  </select>
+
+  <select id="getByaddress" resultMap="BaseResultMap">
+    select * from transactionrecord where address=#{value}
+  </select>
 </mapper>

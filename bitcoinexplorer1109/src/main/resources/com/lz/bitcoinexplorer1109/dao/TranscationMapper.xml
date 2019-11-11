@@ -11,6 +11,19 @@
     <result column="fees" jdbcType="DOUBLE" property="fees" />
     <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
   </resultMap>
+  <resultMap id="TranscationMap" type="com.lz.bitcoinexplorer1109.dto.TransactionDto">
+    <result column="transcation_id" jdbcType="INTEGER" property="transcationId" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="total input" jdbcType="DOUBLE" property="totalInput" />
+    <result column="total output" jdbcType="DOUBLE" property="totalOutput" />
+    <result column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="fees" jdbcType="DOUBLE" property="fees" />
+    <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+    <collection property="transactionRecords" ofType="com.lz.bitcoinexplorer1109.dto.TranscationRecordDto" column="transcation_id" select="com.lz.bitcoinexplorer1109.dao.TransactionRecordMapper.selectTranscationByKey">
+
+    </collection>
+  </resultMap>
   <insert id="insert" parameterType="com.lz.bitcoinexplorer1109.po.Transcation">
     insert into transcation (transcation_id, hash, time, 
       "total input", "total output", block_id, 
@@ -75,5 +88,9 @@
     </trim>
   </insert>
 
+
+    <select id="gettranscationByHash" resultMap="TranscationMap">
+      select * from transcation t where t.`hash`=#{hash}
+    </select>
 
 </mapper>

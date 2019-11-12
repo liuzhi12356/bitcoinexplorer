@@ -1,7 +1,10 @@
 package com.lz.bitcoinexplorer1109.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.lz.bitcoinexplorer1109.api.BitcoinApi;
+import com.lz.bitcoinexplorer1109.api.JsonRpcClientBitcoin;
 import com.lz.bitcoinexplorer1109.dao.BlockMapper;
 import com.lz.bitcoinexplorer1109.dto.BlockDto;
 import com.lz.bitcoinexplorer1109.po.Block;
@@ -24,7 +27,15 @@ public class BlockController {
 
     @Autowired
     private BlockMapper blockMapper;
+    @Autowired
+    private JsonRpcClientBitcoin jsonRpcClientBitcoin;
+    @Autowired
+    private BitcoinApi bitcoinApi;
 
+    /***
+     * 区块列表
+     * @return
+     */
     @RequestMapping("/blocks")
     public PageInfo<Block> blocks(){
         PageHelper.startPage(1,20);
@@ -33,9 +44,31 @@ public class BlockController {
         return blockPageInfo;
     }
 
+    /***
+     *
+     * @param hash
+     * @return
+     * 区块详情
+     */
+
     @RequestMapping("/{hash}")
     public BlockDto blockdto(@PathVariable String hash){
         BlockDto dto=blockMapper.getBlockByHash(hash);
         return dto;
+    }
+
+    /**
+     * 获取最新区块
+     * @return
+     * @throws Throwable
+     */
+    @RequestMapping("/bestblock")
+    public Object bestblock() throws Throwable {
+        String bestBlockhash = jsonRpcClientBitcoin.getBestBlockhash();
+       String temphash=bestBlockhash;
+
+           JSONObject block = bitcoinApi.getBlock(temphash);
+
+       return block;
     }
 }
